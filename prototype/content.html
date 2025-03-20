@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Content - HBNB</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #E41D57;
+            --primary-dark: #D31C55;
+            --text-light: #FFFFFF;
+            --text-dark: #333333;
+            --bg-dark: #121212;
+            --bg-card: #1E1E1E;
+            --bg-light: #F7F7F7;
+            --border-color: #2D2D2D;
+        }
+        
+        body {
+            background-color: #F5F5F5;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        /* Header Style */
+        .content-header {
+            background-color: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        /* Main Layout */
+        .content-layout {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: 24px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+        
+        @media (max-width: 992px) {
+            .content-layout {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            height: fit-content;
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar-section {
+            padding: 16px;
+            border-bottom: 1px solid #EEEEEE;
+        }
+        
+        .sidebar-section:last-child {
+            border-bottom: none;
+        }
+        
+        .sidebar-section h3 {
+            font-size: 16px;
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+        
+        .sidebar-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 12px;
+        }
+        
+        .sidebar-menu li:last-child {
+            margin-bottom: 0;
+        }
+        
+        .sidebar-menu a {
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            color: var(--text-dark);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+        
+        .sidebar-menu a:hover {
+            background-color: #F5F5F5;
+        }
+        
+        .sidebar-menu a.active {
+            background-color: #FEE7EC;
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .sidebar-menu i {
+            margin-right: 12px;
+            font-size: 18px;
+            width: 24px;
+            text-align: center;
+        }
+        
+        /* Live Stream Featured Section */
+        .featured-stream-container {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
+        }
+        
+        .stream-player {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: var(--bg-dark);
+        }
+        
+        .stream-player img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .stream-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 16px;
+            box-sizing: border-box;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, transparent 40%, transparent 60%, rgba(0,0,0,0.8) 100%);
+        }
+        
+        .stream-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .live-tag {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .live-tag i {
+            margin-right: 6px;
+            font-size: 12px;
+        }
+        
+        .viewer-count {
+            background-color: rgba(0,0,0,0.6);
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .stream-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .play-button {
+            width: 60px;
+            height: 60px;
+            background-color: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .play-button:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+        
+        .play-button i {
+            color: white;
+            font-size: 24px;
+        }
+        
+        .stream-footer {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .stream-meta {
+            color: white;
+        }
+        
+        .stream-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .stream-action-btn {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .stream-action-btn:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+        
+        .stream-info {
+            padding: 16px;
+        }
+        
+        .streamer-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .streamer-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .streamer-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        
+        .streamer-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .streamer-details h2 {
+            margin: 0 0 4px 0;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .streamer-details p {
+            margin: 0;
+            color: #606060;
+            font-size: 14px;
+        }
+        
+        .follow-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .follow-btn:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .stream-description {
+            color: #606060;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+        
+        .stream-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            color: #606060;
+            font-size: 14px;
+        }
+        
+        /* Video Grid */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .section-header h2 {
+            font-size: 20px;
+            margin: 0;
+            color: var(--text-dark);
+        }
+        
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding: 8px 0;
+            margin-bottom: 20px;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE and Edge */
+        }
+        
+        .filter-bar::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        
+        .filter-chip {
+            background-color: #F0F0F0;
+            color: var(--text-dark);
+            border: none;
+            border-radius: 20px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: background-color 0.2s;
+        }
+        
+        .filter-chip:hover {
+            background-color: #E5E5E5;
+        }
+        
+        .filter-chip.active {
+            background-color: var(--text-dark);
+            color: white;
+        }
+        
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .video-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            transition: transform 0.2s;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+        
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .video-duration, .live-badge {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background-color: rgba(0,0,0,0.7);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .live-badge {
+            background-color: var(--primary-color);
+        }
+        
+        .video-content {
+            padding: 12px;
+        }
+        
+        .video-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin: 0 0 8px 0;
+            color: var(--text-dark);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .video-channel {
+            font-size: 13px;
+            color: #606060;
+            margin: 0 0 4px 0;
+        }
+        
+        .video-stats {
+            font-size: 13px;
+            color: #606060;
+            display: flex;
+            gap: 8px;
+        }
+        
+        /* Creator Call to Action */
+        .creator-cta {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-color) 100%);
+            border-radius: 12px;
+            overflow: hidden;
+            color: white;
+            display: flex;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        
+        .creator-info {
+            padding: 32px;
+            flex: 1;
+        }
+        
+        .creator-info h2 {
+            font-size: 24px;
+            margin: 0 0 16px 0;
+        }
+        
+        .creator-info p {
+            margin: 0 0 24px 0;
+            font-size: 16px;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+        
+        .creator-benefits {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .creator-benefit {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(255,255,255,0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+        
+        .creator-image {
+            display: none;
+        }
+        
+        @media (min-width: 768px) {
+            .creator-image {
+                display: block;
+                flex-basis: 40%;
+                overflow: hidden;
+            }
+            
+            .creator-image img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        
+        .creator-cta-btn {
+            background-color: white;
+            color: var(--primary-color);
+            border: none;
+            border-radius: 20px;
+            padding: 10px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .creator-cta-btn:hover {
+            background-color: #F0F0F0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">HBNB</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="accommodations.html">Stay</a></li>
+                    <li><a href="transportation.html">Travel</a></li>
+                    <li><a href="plan.html">Plan</a></li>
+                    <li><a href="content.html" class="active">Watch</a></li>
+                    <li><a href="social.html">Connect</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-light">Log In</a>
+                <a href="sign_up.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Content Layout -->
+    <div class="content-layout">
+        <!-- Left Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-section">
+                <h3>Discover</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="#" class="active"><i class="fas fa-home"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-fire"></i> Trending</a></li>
+                    <li><a href="#"><i class="fas fa-compass"></i> Explore</a></li>
+                    <li><a href="#"><i class="fas fa-map-marker-alt"></i> Destinations</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Categories</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="#"><i class="fas fa-hotel"></i> Hotels & Resorts</a></li>
+                    <li><a href="#"><i class="fas fa-utensils"></i> Food & Dining</a></li>
+                    <li><a href="#"><i class="fas fa-mountain"></i> Adventure</a></li>
+                    <li><a href="#"><i class="fas fa-landmark"></i> Culture</a></li>
+                    <li><a href="#"><i class="fas fa-shopping-bag"></i> Shopping</a></li>
+                    <li><a href="#"><i class="fas fa-glass-cheers"></i> Nightlife</a></li>
+                </ul>
+            </div>
+            
+            <div class="sidebar-section">
+                <h3>Your Content</h3>
+                <ul class="sidebar-menu">
+                    <li><a href="#"><i class="fas fa-history"></i> Watch History</a></li>
+                    <li><a href="#"><i class="fas fa-heart"></i> Liked Videos</a></li>
+                    <li><a href="#"><i class="fas fa-bookmark"></i> Saved</a></li>
+                    <li><a href="#"><i class="fas fa-user-friends"></i> Followed Creators</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Featured Livestream -->
+            <div class="featured-stream-container">
+                <div class="stream-player">
+                    <img src="https://images.unsplash.com/photo-1506158669146-619067262a00?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Shanghai Skyline Live Stream">
+                    
+                    <div class="stream-overlay">
+                        <div class="stream-header">
+                            <div class="live-tag">
+                                <i class="fas fa-circle"></i> LIVE
+                            </div>
+                            <div class="viewer-count">
+                                <i class="fas fa-eye"></i> 1,245
+                            </div>
+                        </div>
+                        
+                        <div class="stream-controls">
+                            <div class="play-button">
+                                <i class="fas fa-play"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="stream-footer">
+                            <div class="stream-meta">
+                                <h3>Walking Tour of The Bund, Shanghai</h3>
+                            </div>
+                            <div class="stream-actions">
+                                <button class="stream-action-btn">
+                                    <i class="fas fa-share"></i>
+                                </button>
+                                <button class="stream-action-btn">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                                <button class="stream-action-btn">
+                                    <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stream-info">
+                    <div class="streamer-row">
+                        <div class="streamer-profile">
+                            <div class="streamer-avatar">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&auto=format&fit=crop&w=200&q=80" alt="Streamer Profile">
+                            </div>
+                            <div class="streamer-details">
+                                <h2>Walking Tour of The Bund, Shanghai</h2>
+                                <p>TravelGuideChina</p>
+                            </div>
+                        </div>
+                        <button class="follow-btn">Follow</button>
+                    </div>
+                    
+                    <div class="stream-stats">
+                        <span><i class="fas fa-eye"></i> 1,245 watching</span>
+                        <span><i class="fas fa-heart"></i> 328 likes</span>
+                        <span><i class="fas fa-calendar-alt"></i> Started 45 minutes ago</span>
+                    </div>
+                    
+                    <div class="stream-description">
+                        Join me as I explore The Bund in Shanghai! We'll see colonial architecture, amazing skyline views, and discover some hidden spots along the way. Ask questions in the comments and I'll answer live!
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Live Now Section -->
+            <div class="section-header">
+                <h2>Live Now</h2>
+                <a href="#" style="color: var(--primary-color);">See all</a>
+            </div>
+            
+            <div class="filter-bar">
+                <button class="filter-chip active">All</button>
+                <button class="filter-chip">Hotels & Resorts</button>
+                <button class="filter-chip">City Tours</button>
+                <button class="filter-chip">Food</button>
+                <button class="filter-chip">Adventure</button>
+                <button class="filter-chip">Cultural</button>
+                <button class="filter-chip">Beaches</button>
+                <button class="filter-chip">Mountains</button>
+            </div>
+            
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1591017403286-fd8493524e1e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Luxury Resort Tour">
+                        <div class="live-badge">LIVE</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Luxury Resort Tour in Sanya, Hainan</h3>
+                        <p class="video-channel">LilyTravel</p>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 763</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1455885661740-29cbf08a42fa?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Street Food Tour">
+                        <div class="live-badge">LIVE</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Street Food Tour in Hong Kong</h3>
+                        <p class="video-channel">FoodieExplorer</p>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 954</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1579689225145-3410a9cc1e1f?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Hiking Yellow Mountain">
+                        <div class="live-badge">LIVE</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Hiking Yellow Mountain at Sunrise</h3>
+                        <p class="video-channel">AdventureSeeker</p>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 428</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Temple Tour">
+                        <div class="live-badge">LIVE</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Ancient Temples of Kyoto</h3>
+                        <p class="video-channel">JapanExplorer</p>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 317</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Popular Videos Section -->
+            <div class="section-header">
+                <h2>Popular Videos</h2>
+                <a href="#" style="color: var(--primary-color);">See all</a>
+            </div>
+            
+            <div class="filter-bar">
+                <button class="filter-chip active">All</button>
+                <button class="filter-chip">Hotels</button>
+                <button class="filter-chip">City Tours</button>
+                <button class="filter-chip">Food</button>
+                <button class="filter-chip">Nature</button>
+                <button class="filter-chip">Culture</button>
+                <button class="filter-chip">Transportation</button>
+            </div>
+            
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1624138784614-87fd1b6528f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Beijing Video">
+                        <div class="video-duration">12:34</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Top 10 Must-Visit Places in Beijing</h3>
+                        <p class="video-channel">ChinaTraveler</p>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 254K</span>
+                            <span><i class="fas fa-calendar-alt"></i> 3 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Food Video">
+                        <div class="video-duration">18:45</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Authentic Sichuan Cuisine Guide</h3>
+                        <p class="video-channel">FoodieExplorer</p>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 187K</span>
+                            <span><i class="fas fa-calendar-alt"></i> 1 month ago</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1549893072-3dec7111d847?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Great Wall Video">
+                        <div class="video-duration">25:18</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Hiking the Great Wall: Secret Sections</h3>
+                        <p class="video-channel">AdventureSeeker</p>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 328K</span>
+                            <span><i class="fas fa-calendar-alt"></i> 2 months ago</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Hotel Review">
+                        <div class="video-duration">15:27</div>
+                    </div>
+                    <div class="video-content">
+                        <h3 class="video-title">Luxury Hotel Review: The Peninsula Shanghai</h3>
+                        <p class="video-channel">LuxuryTravelReviews</p>
+                        <div class="video-stats">
+                            <span><i class="fas fa-eye"></i> 143K</span>
+                            <span><i class="fas fa-calendar-alt"></i> 2 weeks ago</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Creator CTA -->
+            <div class="creator-cta">
+                <div class="creator-info">
+                    <h2>Share Your Travel Experiences</h2>
+                    <p>Become a content creator on HBNB and share your travel adventures with millions of travelers. Live stream your trips, create engaging videos, and monetize your content.</p>
+                    <div class="creator-benefits">
+                        <div class="creator-benefit">
+                            <i class="fas fa-video"></i>
+                            <span>Live streaming tools</span>
+                        </div>
+                        <div class="creator-benefit">
+                            <i class="fas fa-dollar-sign"></i>
+                            <span>Monetization options</span>
+                        </div>
+                        <div class="creator-benefit">
+                            <i class="fas fa-users"></i>
+                            <span>Grow your audience</span>
+                        </div>
+                    </div>
+                    <button class="creator-cta-btn">Become a Creator</button>
+                </div>
+                <div class="creator-image">
+                    <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Content Creator">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>HBNB</h3>
+                    <p>Your complete travel platform for accommodation, transportation, and experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Discover</h4>
+                    <ul>
+                        <li><a href="accommodations.html">Accommodations</a></li>
+                        <li><a href="transportation.html">Transportation</a></li>
+                        <li><a href="plan.html">Trip Planning</a></li>
+                        <li><a href="content.html">Live Streams</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Host</h4>
+                    <ul>
+                        <li><a href="#">Host a Home</a></li>
+                        <li><a href="#">Host an Experience</a></li>
+                        <li><a href="#">Create Content</a></li>
+                        <li><a href="#">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Information</a></li>
+                        <li><a href="#">Cancellation Options</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 HBNB. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

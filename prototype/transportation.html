@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transportation - CUFA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Hero section styles */
+        .hero-section {
+            background: linear-gradient(135deg, #D31C55 0%, #E41D57 100%);
+            color: white;
+            padding: 60px 0;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        
+        .badge {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .badge i {
+            margin-right: 8px;
+            color: #a3ff9e;
+        }
+        
+        /* Search tabs and form */
+        .search-container {
+            background: white;
+            max-width: 1140px;
+            margin: -30px auto 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #f0f0f0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .tab {
+            padding: 16px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #333;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .tab.active {
+            background-color: #fff1f3;
+            color: #E41D57;
+            font-weight: 600;
+        }
+        
+        .tab i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .search-form {
+            padding: 20px;
+            background-color: #fff1f3;
+        }
+        
+        .trip-type {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .radio-group {
+            display: flex;
+            align-items: center;
+        }
+        
+        .radio-group input[type="radio"] {
+            margin-right: 8px;
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+            gap: 15px;
+        }
+        
+        .form-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 6px;
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon input, 
+        .input-with-icon select {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
+        
+        .search-button {
+            width: 100%;
+            background-color: #E41D57;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Flight results */
+        .results-container {
+            max-width: 1140px;
+            margin: 0 auto 40px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 0 15px;
+        }
+        
+        .results-filters {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-chip {
+            display: flex;
+            align-items: center;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 6px 12px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        .filter-chip i {
+            margin-right: 6px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .flight-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .airline-header {
+            display: flex;
+            padding: 15px;
+            background-color: #f9f9f9;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .airline-logo {
+            width: 30px;
+            height: 30px;
+            margin-right: 10px;
+            border-radius: 50%;
+            background-color: #eee;
+        }
+        
+        .airline-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .flight-details {
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        .flight-route {
+            flex: 1;
+            min-width: 250px;
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .flight-time-block {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .time {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .airport-code {
+            font-size: 14px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        .flight-route-line {
+            flex: 2;
+            height: 2px;
+            background-color: #ddd;
+            position: relative;
+            margin: 0 15px;
+        }
+        
+        .flight-route-line::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: -4px;
+            width: 10px;
+            height: 10px;
+            border-top: 2px solid #ddd;
+            border-right: 2px solid #ddd;
+            transform: rotate(45deg);
+        }
+        
+        .flight-route-info {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 12px;
+            color: #666;
+            white-space: nowrap;
+            background-color: white;
+            padding: 2px 8px;
+        }
+        
+        .flight-info {
+            flex: 1;
+            min-width: 180px;
+        }
+        
+        .flight-info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .info-label {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .info-value {
+            font-size: 13px;
+            font-weight: 600;
+        }
+        
+        .flight-price {
+            flex: 0 0 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-end;
+        }
+        
+        .price-amount {
+            font-size: 24px;
+            font-weight: 700;
+            color: #E41D57;
+        }
+        
+        .price-type {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+        }
+        
+        .select-flight-btn {
+            background-color: #E41D57;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            margin-top: 10px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
+        /* Promo section */
+        .promo-section {
+            max-width: 1140px;
+            margin: 40px auto;
+            padding: 0 15px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+        
+        .promo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .promo-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+        
+        .promo-image {
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .promo-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+        
+        .promo-card:hover .promo-image img {
+            transform: scale(1.05);
+        }
+        
+        .promo-content {
+            padding: 16px;
+        }
+        
+        .promo-content h3 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .promo-content p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        
+        .offer-code {
+            display: inline-block;
+            background-color: #fff1f3;
+            color: #E41D57;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .promo-button {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #f5f5f5;
+            color: #333;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .promo-button:hover {
+            background-color: #eaeaea;
+        }
+        
+        @media (max-width: 768px) {
+            .flight-details {
+                flex-direction: column;
+            }
+            
+            .flight-route, .flight-info, .flight-price {
+                width: 100%;
+            }
+            
+            .flight-price {
+                align-items: flex-start;
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">CUFA</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="accommodations.html">Stay</a></li>
+                    <li><a href="transportation.html" class="active">Travel</a></li>
+                    <li><a href="plan.html">Plan</a></li>
+                    <li><a href="content.html">Watch</a></li>
+                    <li><a href="social.html">Connect</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-light">Log In</a>
+                <a href="sign_up.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Your Trip Starts Here</h1>
+            <p>Find the best flights, trains, and transportation options for your journey</p>
+            
+            <div class="trust-badges">
+                <div class="badge">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Secure payment</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-headset"></i>
+                    <span>Support in approx. 30s</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Container -->
+    <div class="search-container">
+        <div class="tabs">
+            <div class="tab active">
+                <i class="fas fa-plane"></i>
+                <span>Flights</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-train"></i>
+                <span>Trains</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-bus"></i>
+                <span>Buses</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-car"></i>
+                <span>Car Rentals</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-ship"></i>
+                <span>Ferries</span>
+            </div>
+        </div>
+        
+        <div class="search-form">
+            <div class="trip-type">
+                <div class="radio-group">
+                    <input type="radio" id="round-trip" name="trip-type" checked>
+                    <label for="round-trip">Round Trip</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="one-way" name="trip-type">
+                    <label for="one-way">One Way</label>
+                </div>
+                <div class="radio-group">
+                    <input type="radio" id="multi-city" name="trip-type">
+                    <label for="multi-city">Multi-city</label>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>From</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-plane-departure"></i>
+                        <input type="text" placeholder="City or airport" value="Shanghai (PVG)">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>To</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-plane-arrival"></i>
+                        <input type="text" placeholder="City or airport" value="Beijing (PEK)">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Departure</label>
+                    <div class="input-with-icon">
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" value="2023-10-15">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Return</label>
+                    <div class="input-with-icon">
+                        <i class="far fa-calendar-alt"></i>
+                        <input type="date" value="2023-10-20">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Passengers</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <select>
+                            <option>1 Adult</option>
+                            <option selected>2 Adults</option>
+                            <option>3 Adults</option>
+                            <option>4+ Adults</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Class</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-chair"></i>
+                        <select>
+                            <option selected>Economy</option>
+                            <option>Premium Economy</option>
+                            <option>Business</option>
+                            <option>First Class</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="search-button">Search Flights</button>
+        </div>
+    </div>
+
+    <!-- Flight Results -->
+    <div class="results-container">
+        <div class="results-header">
+            <h2>Shanghai → Beijing (Oct 15 - Oct 20)</h2>
+            <div class="results-filters">
+                <div class="filter-chip">
+                    <i class="fas fa-filter"></i>
+                    <span>Filters</span>
+                </div>
+                <div class="filter-chip">
+                    <i class="fas fa-sort"></i>
+                    <span>Sort: Cheapest</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Flight Card 1 -->
+        <div class="flight-card">
+            <div class="airline-header">
+                <div class="airline-logo"></div>
+                <div class="airline-name">China Eastern Airlines</div>
+            </div>
+            
+            <div class="flight-details">
+                <div class="flight-route">
+                    <div class="flight-time-block">
+                        <div class="time">07:30</div>
+                        <div class="airport-code">PVG</div>
+                    </div>
+                    
+                    <div class="flight-route-line">
+                        <div class="flight-route-info">2h 15m</div>
+                    </div>
+                    
+                    <div class="flight-time-block">
+                        <div class="time">09:45</div>
+                        <div class="airport-code">PEK</div>
+                    </div>
+                </div>
+                
+                <div class="flight-info">
+                    <div class="flight-info-row">
+                        <div class="info-label">Flight</div>
+                        <div class="info-value">MU5137</div>
+                    </div>
+                    <div class="flight-info-row">
+                        <div class="info-label">Aircraft</div>
+                        <div class="info-value">Boeing 737-800</div>
+                    </div>
+                    <div class="flight-info-row">
+                        <div class="info-label">Class</div>
+                        <div class="info-value">Economy</div>
+                    </div>
+                </div>
+                
+                <div class="flight-price">
+                    <div class="price-amount">¥1,280</div>
+                    <div class="price-type">Round trip / 2 adults</div>
+                    <button class="select-flight-btn">Select</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Flight Card 2 -->
+        <div class="flight-card">
+            <div class="airline-header">
+                <div class="airline-logo"></div>
+                <div class="airline-name">Air China</div>
+            </div>
+            
+            <div class="flight-details">
+                <div class="flight-route">
+                    <div class="flight-time-block">
+                        <div class="time">10:15</div>
+                        <div class="airport-code">PVG</div>
+                    </div>
+                    
+                    <div class="flight-route-line">
+                        <div class="flight-route-info">2h 30m</div>
+                    </div>
+                    
+                    <div class="flight-time-block">
+                        <div class="time">12:45</div>
+                        <div class="airport-code">PEK</div>
+                    </div>
+                </div>
+                
+                <div class="flight-info">
+                    <div class="flight-info-row">
+                        <div class="info-label">Flight</div>
+                        <div class="info-value">CA1856</div>
+                    </div>
+                    <div class="flight-info-row">
+                        <div class="info-label">Aircraft</div>
+                        <div class="info-value">Airbus A321</div>
+                    </div>
+                    <div class="flight-info-row">
+                        <div class="info-label">Class</div>
+                        <div class="info-value">Economy</div>
+                    </div>
+                </div>
+                
+                <div class="flight-price">
+                    <div class="price-amount">¥1,380</div>
+                    <div class="price-type">Round trip / 2 adults</div>
+                    <button class="select-flight-btn">Select</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Flight Card 3 -->
+        <div class="flight-card">
+            <div class="airline-header">
+                <div class="airline-logo"></div>
+                <div class="airline-name">China Southern Airlines</div>
+            </div>
+            
+            <div class="flight-details">
+                <div class="flight-route">
+                    <div class="flight-time-block">
+                        <div class="time">14:00</div>
+                        <div class="airport-code">PVG</div>
+                    </div>
+                    
+                    <div class="flight-route-line">
+                        <div class="flight-route-info">2h 20m</div>
+                    </div>
+                    
+                    <div class="flight-time-block">
+                        <div class="time">16:20</div>
+                        <div class="airport-code">PEK</div>
+                    </div>
+                </div>
+                
+                <div class="flight-info">
+                    <div class="flight-info-row">
+                        <div class="info-label">Flight</div>
+                        <div class="info-value">CZ3918</div>
+                    </div>
+                    <div class="flight-info-row">
+                        <div class="info-label">Aircraft</div>
+                        <div class="info-value">Boeing 787-9</div>
+                    </div>
+                    <div class="flight-info-row">
+                        <div class="info-label">Class</div>
+                        <div class="info-value">Economy</div>
+                    </div>
+                </div>
+                
+                <div class="flight-price">
+                    <div class="price-amount">¥1,180</div>
+                    <div class="price-type">Round trip / 2 adults</div>
+                    <button class="select-flight-btn">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promotions Section -->
+    <section class="promo-section">
+        <h2 class="section-title">Special Offers</h2>
+        
+        <div class="promo-grid">
+            <div class="promo-card">
+                <div class="promo-image">
+                    <img src="https://images.unsplash.com/photo-1517400508447-f8dd518b86db?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Domestic Flight Sale">
+                </div>
+                <div class="promo-content">
+                    <h3>Domestic Flight Sale</h3>
+                    <p>Up to 30% off on all domestic routes</p>
+                    <span class="offer-code">Use code: CHINA30</span>
+                    <a href="#" class="promo-button">View Offer</a>
+                </div>
+            </div>
+            
+            <div class="promo-card">
+                <div class="promo-image">
+                    <img src="https://images.unsplash.com/photo-1540339832862-474599807836?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Business Class Upgrade">
+                </div>
+                <div class="promo-content">
+                    <h3>Business Class Upgrade</h3>
+                    <p>Upgrade your experience at half the price</p>
+                    <span class="offer-code">Use code: BIZUP50</span>
+                    <a href="#" class="promo-button">View Offer</a>
+                </div>
+            </div>
+            
+            <div class="promo-card">
+                <div class="promo-image">
+                    <img src="https://images.unsplash.com/photo-1573032889242-d3c47121e634?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Weekend Getaway">
+                </div>
+                <div class="promo-content">
+                    <h3>Weekend Getaway Bundle</h3>
+                    <p>Flight + Hotel packages with 25% savings</p>
+                    <span class="offer-code">Use code: WEEKEND25</span>
+                    <a href="#" class="promo-button">View Offer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>CUFA</h3>
+                    <p>Your complete travel platform for accommodation, transportation, and experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Discover</h4>
+                    <ul>
+                        <li><a href="accommodations.html">Accommodations</a></li>
+                        <li><a href="transportation.html">Transportation</a></li>
+                        <li><a href="plan.html">Trip Planning</a></li>
+                        <li><a href="content.html">Live Streams</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Information</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CUFA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

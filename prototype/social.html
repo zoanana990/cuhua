@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Social Network - CUFA</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">CUFA</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="accommodations.html">Stay</a></li>
+                    <li><a href="transportation.html">Travel</a></li>
+                    <li><a href="plan.html">Plan</a></li>
+                    <li><a href="content.html">Watch</a></li>
+                    <li><a href="social.html" class="active">Connect</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-light">Log In</a>
+                <a href="signup.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Social Feed -->
+    <section class="social-feed">
+        <div class="container">
+            <div class="social-layout">
+                <!-- Left Sidebar -->
+                <div class="sidebar left-sidebar">
+                    <div class="user-profile">
+                        <div class="profile-header">
+                            <img src="https://placecats.com/80/80" alt="User Profile" class="profile-pic">
+                            <div class="profile-info">
+                                <h3>Guest User</h3>
+                                <p>Join to personalize your feed</p>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <a href="login.html" class="btn btn-primary btn-block">Sign In</a>
+                        </div>
+                    </div>
+                    
+                    <div class="navigation-menu">
+                        <ul>
+                            <li class="active"><a href="#"><i class="fas fa-globe"></i> Explore</a></li>
+                            <li><a href="#"><i class="fas fa-fire"></i> Trending</a></li>
+                            <li><a href="#"><i class="fas fa-map-marker-alt"></i> Near Me</a></li>
+                            <li><a href="#"><i class="fas fa-users"></i> Communities</a></li>
+                            <li><a href="#"><i class="fas fa-bookmark"></i> Saved Posts</a></li>
+                            <li><a href="#"><i class="fas fa-calendar-alt"></i> Events</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div class="trending-topics">
+                        <h3>Trending Topics</h3>
+                        <div class="topic-tags">
+                            <a href="#" class="topic-tag">#ShanghaiTravel</a>
+                            <a href="#" class="topic-tag">#GreatWallHike</a>
+                            <a href="#" class="topic-tag">#ChengduFoodTour</a>
+                            <a href="#" class="topic-tag">#BeijingCulture</a>
+                            <a href="#" class="topic-tag">#YunnanScenery</a>
+                            <a href="#" class="topic-tag">#HongKongNightlife</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Main Content -->
+                <div class="main-content">
+                    <div class="create-post">
+                        <div class="post-input">
+                            <img src="https://placecats.com/50/50" alt="User">
+                            <input type="text" placeholder="Share your travel experience...">
+                        </div>
+                        <div class="post-actions">
+                            <button class="post-action"><i class="fas fa-image"></i> Photo</button>
+                            <button class="post-action"><i class="fas fa-video"></i> Video</button>
+                            <button class="post-action"><i class="fas fa-map-marker-alt"></i> Location</button>
+                            <button class="btn btn-primary">Post</button>
+                        </div>
+                    </div>
+                    
+                    <div class="feed-filter">
+                        <button class="filter-btn active">For You</button>
+                        <button class="filter-btn">Following</button>
+                        <button class="filter-btn">Latest</button>
+                        <button class="filter-btn">Popular</button>
+                    </div>
+                    
+                    <!-- Social Posts -->
+                    <div class="posts-container">
+                        <!-- Post 1 -->
+                        <div class="post-card">
+                            <div class="post-header">
+                                <img src="https://placecats.com/45/45" alt="User" class="user-pic">
+                                <div class="post-user-info">
+                                    <h4>Travel Enthusiast</h4>
+                                    <div class="post-meta">
+                                        <span class="location"><i class="fas fa-map-marker-alt"></i> The Bund, Shanghai</span>
+                                        <span class="time">2 hours ago</span>
+                                    </div>
+                                </div>
+                                <button class="post-more"><i class="fas fa-ellipsis-h"></i></button>
+                            </div>
+                            
+                            <div class="post-content">
+                                <p>Amazing sunset view from The Bund today! Shanghai's skyline is absolutely breathtaking. If you're visiting, make sure to come here around 6-7pm for the best lighting. #ShanghaiTravel #TheBund</p>
+                                <div class="post-images">
+                                    <img src="https://placecats.com/800/500" alt="Bund Skyline">
+                                </div>
+                            </div>
+                            
+                            <div class="post-stats">
+                                <div class="stat-item"><i class="far fa-heart"></i> 245</div>
+                                <div class="stat-item"><i class="far fa-comment"></i> 37</div>
+                                <div class="stat-item"><i class="far fa-bookmark"></i> 18</div>
+                                <div class="stat-item"><i class="fas fa-share"></i> 5</div>
+                            </div>
+                            
+                            <div class="post-actions">
+                                <button class="post-action-btn"><i class="far fa-heart"></i> Like</button>
+                                <button class="post-action-btn"><i class="far fa-comment"></i> Comment</button>
+                                <button class="post-action-btn"><i class="far fa-bookmark"></i> Save</button>
+                                <button class="post-action-btn"><i class="fas fa-share"></i> Share</button>
+                            </div>
+                            
+                            <div class="post

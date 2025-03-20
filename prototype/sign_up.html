@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CUFA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .signup-modal {
+            max-width: 568px;
+            margin: 40px auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .signup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #EBEBEB;
+        }
+        
+        .signup-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .signup-close {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .signup-content {
+            padding: 24px;
+        }
+        
+        .signup-welcome {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #B0B0B0;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .phone-input-container {
+            margin-bottom: 16px;
+        }
+        
+        .country-select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #B0B0B0;
+            border-radius: 8px 8px 0 0;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .phone-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #B0B0B0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            font-size: 16px;
+        }
+        
+        .signup-info {
+            font-size: 12px;
+            color: #717171;
+            margin-bottom: 16px;
+        }
+        
+        .signup-info a {
+            color: #222;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        .continue-btn {
+            width: 100%;
+            background-color: #E41D57;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+        
+        .continue-btn:hover {
+            background-color: #D31C55;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 16px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #EBEBEB;
+        }
+        
+        .divider span {
+            padding: 0 16px;
+            color: #717171;
+            font-size: 14px;
+        }
+        
+        .social-signup-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px;
+            border: 1px solid #B0B0B0;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        
+        .social-signup-btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .social-signup-btn img {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+        }
+
+        .terms-text {
+            font-size: 12px;
+            color: #717171;
+            margin-top: 20px;
+            text-align: center;
+        }
+        
+        .terms-text a {
+            color: #222;
+            text-decoration: underline;
+        }
+
+        .login-link {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .login-link a {
+            color: #E41D57;
+            font-weight: 600;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">CUFA</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="accommodations.html">Stay</a></li>
+                    <li><a href="transportation.html">Travel</a></li>
+                    <li><a href="plan.html">Plan</a></li>
+                    <li><a href="content.html">Watch</a></li>
+                    <li><a href="social.html">Connect</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Sign Up Modal -->
+    <div class="signup-modal">
+        <div class="signup-header">
+            <button class="signup-close"><i class="fas fa-times"></i></button>
+            <h2>Sign up</h2>
+            <div style="width: 16px;"></div> <!-- Spacer for centering -->
+        </div>
+        
+        <div class="signup-content">
+            <h1 class="signup-welcome">Welcome to CUFA</h1>
+            
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="Enter your email">
+            </div>
+            
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name">
+            </div>
+            
+            <div class="phone-input-container">
+                <div class="country-select">
+                    <div>China (+86)</div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <input type="tel" placeholder="Phone number" class="phone-input">
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" placeholder="Create a password (min. 8 characters)">
+            </div>
+            
+            <p class="signup-info">By signing up, you agree to receive booking related emails. You can opt out at any time.</p>
+            
+            <button class="continue-btn">Sign Up</button>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <button class="social-signup-btn">
+                <i class="fab fa-weixin" style="color: #07C160;"></i>
+                Continue with WeChat
+            </button>
+            
+            <button class="social-signup-btn">
+                <i class="fab fa-apple"></i>
+                Continue with Apple
+            </button>
+            
+            <button class="social-signup-btn">
+                <i class="fab fa-google" style="color: #4285F4;"></i>
+                Continue with Google
+            </button>
+            
+            <button class="social-signup-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Qq.svg" alt="QQ">
+                Continue with QQ
+            </button>
+            
+            <button class="social-signup-btn">
+                <i class="fab fa-weibo" style="color: #E6162D;"></i>
+                Continue with Weibo
+            </button>
+            
+            <button class="social-signup-btn">
+                <i class="fab fa-facebook" style="color: #1877F2;"></i>
+                Continue with Facebook
+            </button>
+            
+            <p class="terms-text">
+                By signing up, you agree to our <a href="#">Terms of Service</a>, <a href="#">Privacy Policy</a>, and <a href="#">Cookie Policy</a>.
+            </p>
+            
+            <p class="login-link">
+                Already have an account? <a href="login.html">Log in</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>CUFA</h3>
+                    <p>Your complete travel platform for accommodation, transportation, and experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Information</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CUFA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

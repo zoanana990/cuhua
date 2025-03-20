@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accommodations - CUFA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Hero section styles */
+        .hero-section {
+            background: linear-gradient(135deg, #D31C55 0%, #E41D57 100%);
+            color: white;
+            padding: 60px 0;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        /* Search container styles */
+        .search-container {
+            background: white;
+            max-width: 1140px;
+            margin: -30px auto 40px;
+            border-radius: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+            padding: 10px;
+        }
+        
+        .search-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-item {
+            flex: 1;
+            min-width: 140px;
+            position: relative;
+            padding: 10px 15px;
+            border-right: 1px solid #f0f0f0;
+        }
+        
+        .search-item:last-child {
+            border-right: none;
+        }
+        
+        .search-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .search-input {
+            width: 100%;
+            border: none;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-button {
+            background-color: #E41D57;
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+        }
+        
+        .search-button i {
+            margin-right: 8px;
+        }
+        
+        /* Filter styles */
+        .filters-container {
+            max-width: 1140px;
+            margin: 0 auto 20px;
+        }
+        
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .filter-button {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+        }
+        
+        .filter-button:hover {
+            border-color: #E41D57;
+        }
+        
+        .filter-button.active {
+            background-color: #fff1f3;
+            border-color: #E41D57;
+            color: #E41D57;
+            font-weight: 500;
+        }
+        
+        .filter-button i {
+            margin-right: 8px;
+        }
+        
+        .advanced-filters {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .price-filter {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .price-slider {
+            width: 200px;
+        }
+        
+        .more-filters {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 10px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Listings styles */
+        .listings-container {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+        
+        .listings-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .listings-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .sort-dropdown {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .sort-dropdown select {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .listings-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .listing-card {
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .listing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+        }
+        
+        .listing-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .listing-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .listing-card:hover .listing-image img {
+            transform: scale(1.05);
+        }
+        
+        .favorite-button {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.2s;
+        }
+        
+        .favorite-button:hover {
+            background-color: white;
+            color: #E41D57;
+        }
+        
+        .superhost-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background-color: white;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .listing-details {
+            padding: 16px;
+        }
+        
+        .listing-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .listing-meta {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .listing-amenities {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        
+        .amenity-tag {
+            font-size: 12px;
+            color: #666;
+            background-color: #f7f7f7;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .listing-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .listing-rating {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .rating-star {
+            color: #E41D57;
+        }
+        
+        .listing-price {
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .price-amount {
+            font-size: 18px;
+        }
+        
+        .price-period {
+            font-size: 14px;
+            font-weight: normal;
+            color: #666;
+        }
+        
+        /* Map styles */
+        .map-container {
+            position: sticky;
+            top: 100px;
+            background-color: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            height: calc(100vh - 120px);
+        }
+        
+        .map-placeholder {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .map-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .map-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .map-control {
+            background-color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+        }
+        
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 30px;
+        }
+        
+        .page-button {
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .page-button:hover {
+            border-color: #E41D57;
+            color: #E41D57;
+        }
+        
+        .page-button.active {
+            background-color: #E41D57;
+            border-color: #E41D57;
+            color: white;
+        }
+        
+        .next-button {
+            width: auto;
+            padding: 0 15px;
+        }
+        
+        @media (max-width: 992px) {
+            .listings-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .map-container {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">CUFA</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="accommodations.html" class="active">Stay</a></li>
+                    <li><a href="transportation.html">Travel</a></li>
+                    <li><a href="plan.html">Plan</a></li>
+                    <li><a href="content.html">Watch</a></li>
+                    <li><a href="social.html">Connect</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-light">Log In</a>
+                <a href="sign_up.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Find your perfect stay in Shanghai</h1>
+            <p>Discover unique accommodations and experiences</p>
+        </div>
+    </section>
+
+    <!-- Search Bar -->
+    <div class="search-container">
+        <div class="search-bar">
+            <div class="search-item">
+                <label class="search-label">Where</label>
+                <input type="text" class="search-input" placeholder="Destination" value="Shanghai, China">
+            </div>
+            <div class="search-item">
+                <label class="search-label">Check-in</label>
+                <input type="date" class="search-input" value="2023-10-15">
+            </div>
+            <div class="search-item">
+                <label class="search-label">Check-out</label>
+                <input type="date" class="search-input" value="2023-10-20">
+            </div>
+            <div class="search-item">
+                <label class="search-label">Guests</label>
+                <select class="search-input">
+                    <option>1 Guest</option>
+                    <option selected>2 Guests</option>
+                    <option>3 Guests</option>
+                    <option>4+ Guests</option>
+                </select>
+            </div>
+            <button class="search-button">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="filters-container">
+        <div class="filter-row">
+            <button class="filter-button active"><i class="fas fa-th-large"></i> All</button>
+            <button class="filter-button"><i class="fas fa-building"></i> Apartments</button>
+            <button class="filter-button"><i class="fas fa-home"></i> Houses</button>
+            <button class="filter-button"><i class="fas fa-umbrella-beach"></i> Unique Stays</button>
+            <button class="filter-button"><i class="fas fa-hotel"></i> Hotels</button>
+            <button class="filter-button"><i class="fas fa-wifi"></i> Free WiFi</button>
+            <button class="filter-button"><i class="fas fa-paw"></i> Pet Friendly</button>
+            <button class="filter-button"><i class="fas fa-swimmer"></i> Pool</button>
+        </div>
+        
+        <div class="advanced-filters">
+            <div class="price-filter">
+                <span>Price:</span>
+                <input type="range" min="0" max="2000" value="1000" class="price-slider">
+                <span>¥0 - ¥1,000/night</span>
+            </div>
+            
+            <button class="more-filters">
+                <i class="fas fa-sliders-h"></i> More filters
+            </button>
+        </div>
+    </div>
+
+    <!-- Listings and Map -->
+    <div class="listings-container">
+        <div class="listings-section">
+            <div class="listings-header">
+                <h2 class="listings-title">300+ places to stay in Shanghai</h2>
+                <div class="sort-dropdown">
+                    <span>Sort by:</span>
+                    <select>
+                        <option selected>Recommended</option>
+                        <option>Price: Low to High</option>
+                        <option>Price: High to Low</option>
+                        <option>Top Rated</option>
+                        <option>Most Reviews</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="listings-grid">
+                <!-- Listing Card 1 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1509614921596-703e0b5cc1a1?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Luxury Apartment">
+                        <button class="favorite-button"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="listing-details">
+                        <h3 class="listing-title">Luxury Apartment with Bund View</h3>
+                        <div class="listing-meta">2 Beds • 1 Bath • 75m²</div>
+                        <div class="listing-amenities">
+                            <span class="amenity-tag">WiFi</span>
+                            <span class="amenity-tag">Kitchen</span>
+                            <span class="amenity-tag">AC</span>
+                            <span class="amenity-tag">+3 more</span>
+                        </div>
+                        <div class="listing-footer">
+                            <div class="listing-rating">
+                                <i class="fas fa-star rating-star"></i>
+                                <span>4.92</span>
+                                <span>(128 reviews)</span>
+                            </div>
+                            <div class="listing-price">
+                                <span class="price-amount">¥688</span>
+                                <span class="price-period">/ night</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Listing Card 2 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Cozy Studio">
+                        <button class="favorite-button"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="listing-details">
+                        <h3 class="listing-title">Cozy Studio in French Concession</h3>
+                        <div class="listing-meta">1 Bed • 1 Bath • 45m²</div>
+                        <div class="listing-amenities">
+                            <span class="amenity-tag">WiFi</span>
+                            <span class="amenity-tag">Kitchen</span>
+                            <span class="amenity-tag">+2 more</span>
+                        </div>
+                        <div class="listing-footer">
+                            <div class="listing-rating">
+                                <i class="fas fa-star rating-star"></i>
+                                <span>4.85</span>
+                                <span>(95 reviews)</span>
+                            </div>
+                            <div class="listing-price">
+                                <span class="price-amount">¥498</span>
+                                <span class="price-period">/ night</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Listing Card 3 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1585351483116-4b6a7cadf823?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Traditional House">
+                        <button class="favorite-button"><i class="far fa-heart"></i></button>
+                        <div class="superhost-badge">Superhost</div>
+                    </div>
+                    <div class="listing-details">
+                        <h3 class="listing-title">Traditional Shanghai Shikumen House</h3>
+                        <div class="listing-meta">3 Beds • 2 Bath • 120m²</div>
+                        <div class="listing-amenities">
+                            <span class="amenity-tag">WiFi</span>
+                            <span class="amenity-tag">Kitchen</span>
+                            <span class="amenity-tag">AC</span>
+                            <span class="amenity-tag">+5 more</span>
+                        </div>
+                        <div class="listing-footer">
+                            <div class="listing-rating">
+                                <i class="fas fa-star rating-star"></i>
+                                <span>4.97</span>
+                                <span>(213 reviews)</span>
+                            </div>
+                            <div class="listing-price">
+                                <span class="price-amount">¥1,288</span>
+                                <span class="price-period">/ night</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Listing Card 4 -->
+                <div class="listing-card">
+                    <div class="listing-image">
+                        <img src="https://images.unsplash.com/photo-1545083036-61d13382df65?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Modern Loft">
+                        <button class="favorite-button"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="listing-details">
+                        <h3 class="listing-title">Modern Loft in Jing'an District</h3>
+                        <div class="listing-meta">2 Beds • 1 Bath • 80m²</div>
+                        <div class="listing-amenities">
+                            <span class="amenity-tag">WiFi</span>
+                            <span class="amenity-tag">Kitchen</span>
+                            <span class="amenity-tag">AC</span>
+                            <span class="amenity-tag">+4 more</span>
+                        </div>
+                        <div class="listing-footer">
+                            <div class="listing-rating">
+                                <i class="fas fa-star rating-star"></i>
+                                <span>4.89</span>
+                                <span>(147 reviews)</span>
+                            </div>
+                            <div class="listing-price">
+                                <span class="price-amount">¥728</span>
+                                <span class="price-period">/ night</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pagination">
+                <button class="page-button active">1</button>
+                <button class="page-button">2</button>
+                <button class="page-button">3</button>
+                <button class="page-button">4</button>
+                <button class="page-button">5</button>
+                <button class="page-button next-button">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+        
+        <div class="map-container">
+            <div class="map-placeholder">
+                <img src="https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/121.48,31.23,12,0/800x1000?access_token=pk.placeholder" alt="Map of Shanghai">
+                <div class="map-controls">
+                    <button class="map-control"><i class="fas fa-plus"></i></button>
+                    <button class="map-control"><i class="fas fa-minus"></i></button>
+                    <button class="map-control"><i class="fas fa-location-arrow"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>CUFA</h3>
+                    <p>Your complete travel platform for accommodation, transportation, and experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Discover</h4>
+                    <ul>
+                        <li><a href="accommodations.html">Accommodations</a></li>
+                        <li><a href="transportation.html">Transportation</a></li>
+                        <li><a href="plan.html">Trip Planning</a></li>
+                        <li><a href="content.html">Live Streams</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Host</h4>
+                    <ul>
+                        <li><a href="#">Host a Home</a></li>
+                        <li><a href="#">Host an Experience</a></li>
+                        <li><a href="#">Create Content</a></li>
+                        <li><a href="#">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Information</a></li>
+                        <li><a href="#">Cancellation Options</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CUFA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

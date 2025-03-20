@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Trip Planning - CUFA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Hero section styles */
+        .hero-section {
+            background: linear-gradient(135deg, #D31C55 0%, #E41D57 100%);
+            color: white;
+            padding: 60px 0;
+            border-radius: 12px;
+            margin: 20px auto;
+            max-width: 1200px;
+        }
+        
+        .hero-content {
+            text-align: center;
+            padding: 0 20px;
+        }
+        
+        .hero-title {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
+        .trust-badges {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 24px;
+            margin-top: 16px;
+        }
+        
+        .badge {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .badge i {
+            margin-right: 8px;
+            color: #a3ff9e;
+        }
+        
+        /* Search tabs and form */
+        .search-container {
+            background: white;
+            max-width: 1140px;
+            margin: -30px auto 40px;
+            border-radius: 40px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .tabs {
+            display: flex;
+            border-bottom: 1px solid #f0f0f0;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        
+        .tab {
+            padding: 16px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #333;
+            display: flex;
+            align-items: center;
+            border-radius: 40px 40px 0 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .tab.active {
+            background-color: #fff1f3;
+            color: #E41D57;
+            font-weight: 600;
+        }
+        
+        .tab i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .search-form {
+            display: flex;
+            flex-wrap: wrap;
+            padding: 16px;
+            background-color: #fff1f3;
+        }
+        
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            margin: 8px;
+            position: relative;
+        }
+        
+        .search-input label {
+            display: block;
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 4px;
+        }
+        
+        .search-input input, .search-input select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .date-wrap {
+            display: flex;
+            flex: 1;
+            min-width: 200px;
+            gap: 8px;
+        }
+        
+        .date-item {
+            flex: 1;
+        }
+        
+        .search-btn {
+            background-color: #E41D57;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 120px;
+        }
+        
+        .search-btn i {
+            margin-right: 8px;
+        }
+        
+        /* Planning interface styles */
+        .planning-container {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 24px;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        @media (min-width: 992px) {
+            .planning-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        .planning-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+            overflow: hidden;
+        }
+        
+        .card-header {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .card-header h2 {
+            margin: 0;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .card-content {
+            padding: 20px;
+        }
+        
+        /* AI Chat styles */
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+        }
+        
+        .message {
+            margin-bottom: 16px;
+            display: flex;
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-bubble {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        
+        .message.assistant .message-bubble {
+            background-color: #f5f5f5;
+            color: #333;
+            border-top-left-radius: 4px;
+        }
+        
+        .message.user .message-bubble {
+            background-color: #E41D57;
+            color: white;
+            border-top-right-radius: 4px;
+        }
+        
+        .chat-input-container {
+            display: flex;
+            padding: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #ddd;
+            border-radius: 24px;
+            font-size: 14px;
+        }
+        
+        .chat-send {
+            background-color: #E41D57;
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-left: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+        
+        /* Itinerary styles */
+        .itinerary-container {
+            display: flex;
+            flex-direction: column;
+            height: 600px;
+        }
+        
+        .itinerary-tabs {
+            display: flex;
+            overflow-x: auto;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .itinerary-tab {
+            padding: 16px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: #666;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        
+        .itinerary-tab.active {
+            color: #E41D57;
+            border-bottom: 2px solid #E41D57;
+            font-weight: 600;
+        }
+        
+        .timeline {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 55px;
+            top: 24px;
+            bottom: -24px;
+            width: 2px;
+            background-color: #f0f0f0;
+            z-index: 1;
+        }
+        
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        
+        .timeline-time {
+            width: 110px;
+            padding-right: 20px;
+            text-align: right;
+            font-size: 14px;
+            font-weight: 500;
+            color: #666;
+            padding-top: 3px;
+        }
+        
+        .timeline-content {
+            flex: 1;
+            padding-left: 20px;
+            position: relative;
+        }
+        
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            left: -6px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #E41D57;
+            z-index: 2;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        
+        .timeline-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 12px;
+            color: #888;
+        }
+        
+        .timeline-meta span {
+            display: flex;
+            align-items: center;
+        }
+        
+        .timeline-meta span i {
+            margin-right: 4px;
+        }
+        
+        .footer-buttons {
+            display: flex;
+            justify-content: flex-end;
+            padding: 16px;
+            border-top: 1px solid #f0f0f0;
+            gap: 12px;
+        }
+        
+        .footer-button {
+            padding: 10px 16px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .footer-button i {
+            margin-right: 8px;
+        }
+        
+        .footer-button.primary {
+            background-color: #E41D57;
+            color: white;
+        }
+        
+        .footer-button.secondary {
+            background-color: #f5f5f5;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">CUFA</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="accommodations.html">Stay</a></li>
+                    <li><a href="transportation.html">Travel</a></li>
+                    <li><a href="plan.html" class="active">Plan</a></li>
+                    <li><a href="content.html">Watch</a></li>
+                    <li><a href="social.html">Connect</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-light">Log In</a>
+                <a href="sign_up.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Your Trip Starts Here</h1>
+            <p>Plan your perfect trip with our AI-powered travel assistant</p>
+            <div class="trust-badges">
+                <div class="badge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Secure payment</span>
+                </div>
+                <div class="badge">
+                    <i class="fas fa-check-circle"></i>
+                    <span>Support in approx. 30s</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search Container -->
+    <div class="search-container">
+        <div class="tabs">
+            <div class="tab active">
+                <i class="fas fa-hotel"></i>
+                <span>Hotels & Homes</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-plane"></i>
+                <span>Flights</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-train"></i>
+                <span>Trains</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-car"></i>
+                <span>Cars</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Attractions & Tours</span>
+            </div>
+            <div class="tab">
+                <i class="fas fa-suitcase"></i>
+                <span>Flight + Hotel</span>
+            </div>
+        </div>
+        
+        <div class="search-form">
+            <div class="search-input">
+                <label>Destination</label>
+                <input type="text" placeholder="City, airport, region, landmark or property name">
+            </div>
+            
+            <div class="date-wrap">
+                <div class="search-input date-item">
+                    <label>Check-in</label>
+                    <input type="text" placeholder="Wed, Mar 19" value="Wed, Mar 19">
+                </div>
+                
+                <div class="search-input date-item">
+                    <label>Check-out</label>
+                    <input type="text" placeholder="Thu, Mar 20" value="Thu, Mar 20">
+                </div>
+            </div>
+            
+            <div class="search-input">
+                <label>Rooms and Guests</label>
+                <input type="text" placeholder="1 room, 2 adults, 0 children" value="1 room, 2 adults, 0 children">
+            </div>
+            
+            <button class="search-btn">
+                <i class="fas fa-search"></i>
+                Search
+            </button>
+        </div>
+    </div>
+
+    <!-- Planning Interface -->
+    <div class="planning-container">
+        <!-- AI Assistant -->
+        <div class="planning-card">
+            <div class="card-header">
+                <h2>Travel Assistant</h2>
+            </div>
+            <div class="card-content">
+                <div class="chat-container">
+                    <div class="chat-messages">
+                        <div class="message assistant">
+                            <div class="message-bubble">
+                                Hi there! I'm your AI travel assistant. I can help you plan your perfect trip to China. Where would you like to go?
+                            </div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-bubble">
+                                I want to visit Shanghai for 5 days in October
+                            </div>
+                        </div>
+                        <div class="message assistant">
+                            <div class="message-bubble">
+                                Great choice! Shanghai in October has pleasant weather. Based on your interests, I'd recommend:
+                                <br><br>
+                                <strong>Day 1:</strong> Explore the Bund and Yu Garden<br>
+                                <strong>Day 2:</strong> Visit Shanghai Museum and People's Square<br>
+                                <strong>Day 3:</strong> Day trip to water town Zhujiajiao<br>
+                                <strong>Day 4:</strong> French Concession and local food tour<br>
+                                <strong>Day 5:</strong> Shanghai Tower and shopping in Xintiandi
+                                <br><br>
+                                Would you like me to create a detailed itinerary with specific attractions, restaurants, and transportation options?
+                            </div>
+                        </div>
+                        <div class="message user">
+                            <div class="message-bubble">
+                                Yes, please! And could you include some off-the-beaten-path food options?
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chat-input-container">
+                        <input type="text" class="chat-input" placeholder="Ask me anything about your trip...">
+                        <button class="chat-send"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Itinerary Preview -->
+        <div class="planning-card">
+            <div class="card-header">
+                <h2>Your Itinerary</h2>
+            </div>
+            <div class="card-content">
+                <div class="itinerary-container">
+                    <div class="itinerary-tabs">
+                        <div class="itinerary-tab active">Day 1</div>
+                        <div class="itinerary-tab">Day 2</div>
+                        <div class="itinerary-tab">Day 3</div>
+                        <div class="itinerary-tab">Day 4</div>
+                        <div class="itinerary-tab">Day 5</div>
+                    </div>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-time">9:00 AM</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">The Bund</div>
+                                <div class="timeline-desc">Start your day with a morning stroll along the famous waterfront promenade.</div>
+                                <div class="timeline-meta">
+                                    <span><i class="far fa-clock"></i> 2 hours</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> Zhongshan East Road</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">11:30 AM</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Lunch at Nanxiang Steamed Bun Restaurant</div>
+                                <div class="timeline-desc">Try Shanghai's famous soup dumplings (xiaolongbao) at this historic restaurant.</div>
+                                <div class="timeline-meta">
+                                    <span><i class="far fa-clock"></i> 1 hour</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> Yu Garden</span>
+                                    <span><i class="fas fa-yen-sign"></i> ¥80-120 per person</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">1:00 PM</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Yu Garden</div>
+                                <div class="timeline-desc">Explore this classical Chinese garden from the Ming Dynasty with beautiful pavilions and rockeries.</div>
+                                <div class="timeline-meta">
+                                    <span><i class="far fa-clock"></i> 2 hours</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> Huangpu District</span>
+                                    <span><i class="fas fa-yen-sign"></i> ¥40 per person</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">4:00 PM</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Shanghai Old Street</div>
+                                <div class="timeline-desc">Visit this traditional street showcasing Shanghai's architectural styles from the Ming and Qing dynasties.</div>
+                                <div class="timeline-meta">
+                                    <span><i class="far fa-clock"></i> 1.5 hours</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> Near Yu Garden</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="timeline-item">
+                            <div class="timeline-time">7:00 PM</div>
+                            <div class="timeline-content">
+                                <div class="timeline-title">Dinner at Jian Guo 328</div>
+                                <div class="timeline-desc">Hidden local restaurant serving authentic Shanghai cuisine in a homey atmosphere.</div>
+                                <div class="timeline-meta">
+                                    <span><i class="far fa-clock"></i> 1.5 hours</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> Jianguo West Road</span>
+                                    <span><i class="fas fa-yen-sign"></i> ¥150-200 per person</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="footer-buttons">
+                        <button class="footer-button secondary"><i class="fas fa-download"></i> Download PDF</button>
+                        <button class="footer-button primary"><i class="fas fa-calendar-alt"></i> Add to My Trips</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>CUFA</h3>
+                    <p>Your complete travel platform for accommodation, transportation, and experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Discover</h4>
+                    <ul>
+                        <li><a href="accommodations.html">Accommodations</a></li>
+                        <li><a href="transportation.html">Transportation</a></li>
+                        <li><a href="plan.html">Trip Planning</a></li>
+                        <li><a href="content.html">Live Streams</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Information</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CUFA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

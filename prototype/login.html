@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - CUFA</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .login-modal {
+            max-width: 568px;
+            margin: 40px auto;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+        
+        .login-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px;
+            border-bottom: 1px solid #EBEBEB;
+        }
+        
+        .login-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+            margin: 0;
+            text-align: center;
+            flex-grow: 1;
+        }
+        
+        .login-close {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .login-content {
+            padding: 24px;
+        }
+        
+        .login-welcome {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
+        
+        .phone-input-container {
+            margin-bottom: 16px;
+        }
+        
+        .country-select {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #B0B0B0;
+            border-radius: 8px 8px 0 0;
+            font-size: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .phone-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #B0B0B0;
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+            font-size: 16px;
+        }
+        
+        .login-info {
+            font-size: 12px;
+            color: #717171;
+            margin-bottom: 16px;
+        }
+        
+        .login-info a {
+            color: #222;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+        
+        .continue-btn {
+            width: 100%;
+            background-color: #E41D57;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+        
+        .continue-btn:hover {
+            background-color: #D31C55;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 16px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #EBEBEB;
+        }
+        
+        .divider span {
+            padding: 0 16px;
+            color: #717171;
+            font-size: 14px;
+        }
+        
+        .social-login-btn {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 13px;
+            border: 1px solid #B0B0B0;
+            border-radius: 8px;
+            background-color: white;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            margin-bottom: 16px;
+        }
+        
+        .social-login-btn i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        .social-login-btn img {
+            width: 18px;
+            height: 18px;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">CUFA</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="accommodations.html">Stay</a></li>
+                    <li><a href="transportation.html">Travel</a></li>
+                    <li><a href="plan.html">Plan</a></li>
+                    <li><a href="content.html">Watch</a></li>
+                    <li><a href="social.html">Connect</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div class="login-modal">
+        <div class="login-header">
+            <button class="login-close"><i class="fas fa-times"></i></button>
+            <h2>Log in or sign up</h2>
+            <div style="width: 16px;"></div> <!-- Spacer for centering -->
+        </div>
+        
+        <div class="login-content">
+            <h1 class="login-welcome">Welcome to CUFA</h1>
+            
+            <div class="phone-input-container">
+                <div class="country-select">
+                    <div>China (+86)</div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <input type="tel" placeholder="Phone number" class="phone-input">
+            </div>
+            
+            <p class="login-info">We'll call or text you to confirm your number. Standard message and data rates apply. <a href="#">Privacy Policy</a></p>
+            
+            <button class="continue-btn">Continue</button>
+            
+            <div class="divider">
+                <span>or</span>
+            </div>
+            
+            <button class="social-login-btn">
+                <i class="fab fa-weixin" style="color: #07C160;"></i>
+                Continue with WeChat
+            </button>
+            
+            <button class="social-login-btn">
+                <i class="fab fa-apple"></i>
+                Continue with Apple
+            </button>
+            
+            <button class="social-login-btn">
+                <i class="fab fa-google" style="color: #4285F4;"></i>
+                Continue with Google
+            </button>
+            
+            <button class="social-login-btn">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/91/Qq.svg" alt="QQ">
+                Continue with QQ
+            </button>
+            
+            <button class="social-login-btn">
+                <i class="fab fa-weibo" style="color: #E6162D;"></i>
+                Continue with Weibo
+            </button>
+            
+            <button class="social-login-btn">
+                <i class="fab fa-facebook" style="color: #1877F2;"></i>
+                Continue with Facebook
+            </button>
+            
+            <button class="social-login-btn">
+                <i class="far fa-envelope"></i>
+                Continue with Email
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>CUFA</h3>
+                    <p>Your complete travel platform for accommodation, transportation, and experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Information</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CUFA. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

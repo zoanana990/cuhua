@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CUFA - Your Complete Travel Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* Hero section styles */
+        .hero {
+            background: linear-gradient(135deg, #D31C55 0%, #E41D57 100%);
+            color: white;
+            padding: 80px 0;
+            margin-bottom: 60px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .hero-content h1 {
+            font-size: 42px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+        
+        .hero-content p {
+            font-size: 18px;
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+        
+        .search-container {
+            background: white;
+            max-width: 850px;
+            margin: 0 auto;
+            border-radius: 16px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+            overflow: hidden;
+            padding: 8px;
+        }
+        
+        .search-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+        
+        .search-item {
+            flex: 1;
+            min-width: 140px;
+            position: relative;
+            padding: 10px 15px;
+            border-right: 1px solid #f0f0f0;
+        }
+        
+        .search-item:last-of-type {
+            border-right: none;
+        }
+        
+        .search-label {
+            display: block;
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .search-input {
+            width: 100%;
+            border: none;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .search-button {
+            background-color: #E41D57;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.2s;
+        }
+        
+        .search-button:hover {
+            background-color: #D31C55;
+        }
+        
+        /* Destinations section */
+        .featured {
+            padding: 60px 0;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-header h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 16px;
+        }
+        
+        .destination-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .destination-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .destination-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+        
+        .destination-image {
+            height: 180px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .destination-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .destination-card:hover .destination-image img {
+            transform: scale(1.05);
+        }
+        
+        .destination-content {
+            padding: 16px;
+        }
+        
+        .destination-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .destination-desc {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        /* AI Assistant section */
+        .ai-assistant {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+            margin: 60px 0;
+            border-radius: 24px;
+        }
+        
+        .ai-container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+            max-width: 1140px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .ai-info {
+            flex: 1;
+            min-width: 300px;
+        }
+        
+        .ai-info h2 {
+            font-size: 32px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 16px;
+        }
+        
+        .ai-info p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        
+        .ai-button {
+            display: inline-block;
+            background-color: #E41D57;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        
+        .ai-button:hover {
+            background-color: #D31C55;
+        }
+        
+        .chat-preview {
+            flex: 1;
+            min-width: 300px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background-color: #E41D57;
+            color: white;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-header h3 {
+            margin: 0;
+            font-size: 18px;
+        }
+        
+        .chat-body {
+            padding: 16px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: 16px;
+            max-width: 80%;
+        }
+        
+        .message.assistant {
+            background-color: #f1f1f1;
+            color: #333;
+            padding: 12px 16px;
+            border-radius: 18px 18px 18px 0;
+        }
+        
+        .message.user {
+            background-color: #E41D57;
+            color: white;
+            padding: 12px 16px;
+            border-radius: 18px 18px 0 18px;
+            margin-left: auto;
+        }
+        
+        /* Live content section */
+        .live-content {
+            padding: 60px 0;
+        }
+        
+        .stream-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+        
+        .stream-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            position: relative;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .stream-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+        
+        .stream-thumb {
+            position: relative;
+            height: 180px;
+            overflow: hidden;
+        }
+        
+        .stream-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .stream-card:hover .stream-thumb img {
+            transform: scale(1.05);
+        }
+        
+        .live-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background-color: #E41D57;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1;
+        }
+        
+        .stream-details {
+            padding: 16px;
+        }
+        
+        .stream-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 4px;
+        }
+        
+        .stream-host {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .center-button {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .view-all-button {
+            display: inline-block;
+            background-color: #E41D57;
+            color: white;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: background-color 0.2s;
+        }
+        
+        .view-all-button:hover {
+            background-color: #D31C55;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1><a href="index.html">CUFA</a></h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="accommodations.html">Stay</a></li>
+                    <li><a href="transportation.html">Travel</a></li>
+                    <li><a href="plan.html">Plan</a></li>
+                    <li><a href="content.html">Watch</a></li>
+                    <li><a href="social.html">Connect</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <a href="login.html" class="btn btn-light">Log In</a>
+                <a href="sign_up.html" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Find your perfect stay and travel experience</h1>
+                <p>Book accommodations, transportation, and plan your entire trip in one place</p>
+                
+                <div class="search-container">
+                    <div class="search-bar">
+                        <div class="search-item">
+                            <label class="search-label">Destination</label>
+                            <input type="text" class="search-input" placeholder="Where are you going?">
+                        </div>
+                        
+                        <div class="search-item">
+                            <label class="search-label">Check-in</label>
+                            <input type="date" class="search-input">
+                        </div>
+                        
+                        <div class="search-item">
+                            <label class="search-label">Check-out</label>
+                            <input type="date" class="search-input">
+                        </div>
+                        
+                        <div class="search-item">
+                            <label class="search-label">Guests</label>
+                            <select class="search-input">
+                                <option>1 Guest</option>
+                                <option selected>2 Guests</option>
+                                <option>3 Guests</option>
+                                <option>4+ Guests</option>
+                            </select>
+                        </div>
+                        
+                        <button class="search-button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Destinations -->
+    <section class="featured">
+        <div class="container">
+            <div class="section-header">
+                <h2>Popular Destinations</h2>
+                <p>Discover these trending destinations loved by our travelers</p>
+            </div>
+            
+            <div class="destination-grid">
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1506816612089-351909b8372b?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Shanghai">
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Shanghai</h3>
+                        <p class="destination-desc">Modern metropolitan experience</p>
+                    </div>
+                </div>
+                
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1584505489290-96eb4e406d08?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Beijing">
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Beijing</h3>
+                        <p class="destination-desc">Historical landmarks and cultural sites</p>
+                    </div>
+                </div>
+                
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1599997949638-28f4316d3098?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Chengdu">
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Chengdu</h3>
+                        <p class="destination-desc">Home of pandas and spicy cuisine</p>
+                    </div>
+                </div>
+                
+                <div class="destination-card">
+                    <div class="destination-image">
+                        <img src="https://images.unsplash.com/photo-1583868838589-83624c5462ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Xi'an">
+                    </div>
+                    <div class="destination-content">
+                        <h3 class="destination-title">Xi'an</h3>
+                        <p class="destination-desc">Ancient city with terracotta warriors</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trip Planning AI Assistant Teaser -->
+    <section class="ai-assistant">
+        <div class="ai-container">
+            <div class="ai-info">
+                <h2>Plan your perfect trip with AI</h2>
+                <p>Our intelligent travel assistant helps you create personalized itineraries based on your preferences and budget. Get recommendations, optimize your schedule, and discover hidden gems all in one place.</p>
+                <a href="plan.html" class="ai-button">Try AI Planner</a>
+            </div>
+            
+            <div class="chat-preview">
+                <div class="chat-header">
+                    <h3>AI Travel Assistant</h3>
+                </div>
+                <div class="chat-body">
+                    <div class="message assistant">
+                        How can I help you plan your trip today?
+                    </div>
+                    <div class="message user">
+                        I want to visit Shanghai for 5 days in October.
+                    </div>
+                    <div class="message assistant">
+                        Great choice! Shanghai in October has pleasant weather. Would you prefer to focus on city sightseeing, cultural experiences, or food adventures?
+                    </div>
+                    <div class="message user">
+                        I'm interested in culture and food, with some modern architecture.
+                    </div>
+                    <div class="message assistant">
+                        Perfect! I'll create an itinerary with the Bund, Yu Garden, French Concession, and some amazing local restaurants. Would you like me to include some hidden gems that most tourists miss?
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Content Preview -->
+    <section class="live-content">
+        <div class="container">
+            <div class="section-header">
+                <h2>Travel Streams & Content</h2>
+                <p>Watch live streams and videos from travelers around the world</p>
+            </div>
+            
+            <div class="stream-grid">
+                <div class="stream-card">
+                    <div class="stream-thumb">
+                        <div class="live-badge">LIVE</div>
+                        <img src="https://images.unsplash.com/photo-1610641818989-bcd0bd756744?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Live tour of resort">
+                    </div>
+                    <div class="stream-details">
+                        <h3 class="stream-title">Luxury Resort Tour in Sanya</h3>
+                        <p class="stream-host">Join host LilyTravel for an exclusive tour</p>
+                    </div>
+                </div>
+                
+                <div class="stream-card">
+                    <div class="stream-thumb">
+                        <img src="https://images.unsplash.com/photo-1563245372-f21724e3856d?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Street food tour">
+                    </div>
+                    <div class="stream-details">
+                        <h3 class="stream-title">Street Food Tour in Hong Kong</h3>
+                        <p class="stream-host">Recorded highlight from FoodieExplorer</p>
+                    </div>
+                </div>
+                
+                <div class="stream-card">
+                    <div class="stream-thumb">
+                        <div class="live-badge">LIVE</div>
+                        <img src="https://images.unsplash.com/photo-1513415564515-4e711d489065?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=80" alt="Hiking tour">
+                    </div>
+                    <div class="stream-details">
+                        <h3 class="stream-title">Hiking Yellow Mountain</h3>
+                        <p class="stream-host">TravelGuideChina is broadcasting live</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="center-button">
+                <a href="content.html" class="view-all-button">See All Streams</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>CUFA</h3>
+                    <p>Your complete travel platform for accommodation, transportation, and experiences.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Policies</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Discover</h4>
+                    <ul>
+                        <li><a href="accommodations.html">Accommodations</a></li>
+                        <li><a href="transportation.html">Transportation</a></li>
+                        <li><a href="plan.html">Trip Planning</a></li>
+                        <li><a href="content.html">Live Streams</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Host</h4>
+                    <ul>
+                        <li><a href="#">Host a Home</a></li>
+                        <li><a href="#">Host an Experience</a></li>
+                        <li><a href="#">Create Content</a></li>
+                        <li><a href="#">Resources</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Safety Information</a></li>
+                        <li><a href="#">Cancellation Options</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023 CUFA. All rights reserved.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
